@@ -5,26 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flex 布局</title>
-
-    <!--body {先用标签选择器把body网页的身体标签设置一下-->
-    <!--* {给所有元素添加一个小边框，布局完成之后可以删除-->
     <style>
         body {
             margin: 0;
             height: 100vh;
             background-color: #eee;
+            display: flex;
         }
 
-        /*   * {
-            border: 1px solid black;
-        } */
         .yinYing {
-            box-shadow: rgb(0 0 0/20%) 0px 2px 1px -1px,
-                rgb(0 0 0/14%) 0px 1px 1px 0px, rgb(0 0 0/12%) 0px 1px 3px 0px;
+            box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px,
+                rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
         }
 
         .flex {
             display: flex;
+        }
+
+        .column {
+            flex-direction: column;
         }
 
         .baiSe {
@@ -33,10 +32,6 @@
 
         .flex1 {
             flex: 1;
-        }
-
-        .column {
-            flex-direction: column;
         }
 
         .mg8 {
@@ -58,32 +53,57 @@
             color: #666;
         }
 
-        /*当屏幕宽度小于600px时也即是手机，需要改变css*/
-        @media(max-width: 600px) {
+        /* 初始设置：内容左区可滚动 */
+        .left-content {
+            overflow-y: auto;
+            /* 启用垂直滚动条 */
+            max-height: 100%;
+            /* 高度限制在父容器内 */
+        }
+
+        .neiRong {
+            height: calc(100vh - 60px);
+            overflow: hidden;
+            /* 初始状态：内容区不滚动 */
+        }
+
+        /* 屏幕宽度小于600px时：整个内容区可滚动 */
+        @media (max-width: 600px) {
             .ceBian {
                 display: none;
             }
 
             .neiRong {
+                overflow-y: auto;
+                /* 允许内容区滚动 */
                 flex-direction: column;
+                /* 修改内容区为列方向 */
+            }
+
+            .left-content {
+                overflow: visible;
+                /* 禁用左区的单独滚动 */
+                max-height: none;
+                /* 清除高度限制 */
+            }
+
+            .youQu {
+                margin-left: 8px;
+                /* 清除右区的左外边距 */
             }
 
             .shuJuQu {
                 flex-direction: column;
             }
 
-            .shuJuItem {
+            .shuJuQuItem {
                 margin-right: 0;
-            }
-
-            .youQu {
-                margin-left: 8px;
             }
         }
     </style>
 </head>
 
-<body class="flex">
+<body>
     <!--侧边栏-->
     <div style="width: 200px; z-index: 2;" class="ceBian baiSe yinYing">
         <!--头像栏-->
@@ -109,14 +129,14 @@
         <!--头部栏-->
         <div style="height: 60px; z-index: 1;" class="baiSe yinYing">我是头部栏</div>
         <!--内容区-->
-        <div style="overflow: auto;" class="neiRong flex1 flex">
+        <div class="neiRong flex1 flex">
             <!--内容左区占3/4-->
-            <div style="flex: 3;" class="flex column mg8">
+            <div style="flex: 3;" class="left-content flex column mg8">
                 <!--数据区-->
-                <div style="height: 150px;" class="flex shuJuQu">
-                    <div style="height: 100px;" class="shuJuItem flex1 baiSe mgr8 yinYing">数据1区</div>
-                    <div style="height: 100px;" class="shuJuItem flex1 baiSe mgr8 yinYing">数据2区</div>
-                    <div style="height: 100px;" class="shuJuItem flex1 baiSe mgr8 yinYing">数据3区</div>
+                <div class="flex shuJuQu">
+                    <div style="height: 100px;" class="shuJuQuItem flex1 baiSe mgr8 yinYing">数据1区</div>
+                    <div style="height: 100px;" class="shuJuQuItem flex1 baiSe mgr8 yinYing">数据2区</div>
+                    <div style="height: 100px;" class="shuJuQuItem flex1 baiSe mgr8 yinYing">数据3区</div>
                     <div style="height: 100px;" class="flex1 baiSe yinYing">数据4区</div>
                 </div>
                 <!--列表区-->
